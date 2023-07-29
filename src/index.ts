@@ -60,3 +60,47 @@ function loadTasks(): Task[] {
   return JSON.parse(taskJSON)
 }
 
+function addActionItem() {
+  // creating a new action item
+  const newActionItem = document.createElement("div");
+  newActionItem.className = "action_item";
+
+  // creating a text input element
+  const actionItemText = document.createElement("input");
+  actionItemText.type = "text";
+  actionItemText.placeholder = "Enter your text here";
+
+  actionItemText.addEventListener("keypress", (event) => {
+    if(event.key == "Enter") {
+      event.preventDefault();
+    }
+
+    const AI_text = actionItemText.value.trim();
+    if(AI_text != "") {
+      const newParagraph = document.createElement("p");
+      newParagraph.textContent = AI_text;
+
+      newActionItem.replaceChild(newParagraph, actionItemText);
+    }
+  });
+  const removeActionItemBtn = document.createElement("button");
+  removeActionItemBtn.textContent = "remove";
+  removeActionItemBtn.addEventListener("click", () => {
+    newActionItem.remove();
+  });
+
+
+  // text box to new action item box and remove button
+  newActionItem.appendChild(actionItemText);
+  newActionItem.appendChild(removeActionItemBtn);
+
+  // getting parent div
+  const actionItemsDiv = document.querySelector(".action_items");
+  
+  // appending new div to parent div
+  actionItemsDiv?.appendChild(newActionItem);
+
+}
+
+const addActionItemBtn = document.getElementById("add_action_item_btn");
+addActionItemBtn?.addEventListener("click", addActionItem)
